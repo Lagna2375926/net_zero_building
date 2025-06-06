@@ -5,7 +5,6 @@ A web-based simulation tool for designing and analyzing net zero energy building
 2. Dynamic Energy Calculations: Lighting, equipment, HVAC, and solar gains calculated per Indian ECBC standards, scaling with building area.
 3. Smart Technology Integration: Evaluate the impact of smart sensors and controls on energy savings.
 4. INR Cost Analysis: All costs and savings are presented in Indian Rupees for local relevance.
-5. INR Cost Analysis: All costs and savings are presented in Indian Rupees for local relevance.
 ## Tech Skills Used
 - JavaScript
 - Three.js
