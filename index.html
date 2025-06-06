@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Zero Building Simulation Platform (INR)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="container">
+                <h1>Net Zero Building Simulation Platform</h1>
+                <p class="header-subtitle">Advanced Building Performance Analysis with Real-time Calculations</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="container">
+                <div class="simulation-grid">
+                    <!-- Left Panel - Building Configuration -->
+                    <div class="config-panel">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Building Configuration</h3>
+                            </div>
+                            <div class="card__body">
+                                <!-- Orientation Control -->
+                                <div class="form-group">
+                                    <label class="form-label" for="orientation">
+                                        Building Orientation: <span id="orientation-value">0°</span> (North)
+                                    </label>
+                                    <input type="range" id="orientation" class="form-control range-slider" 
+                                           min="0" max="360" value="0" step="1">
+                                    <div class="orientation-labels">
+                                        <span>N (0°)</span>
+                                        <span>E (90°)</span>
+                                        <span>S (180°)</span>
+                                        <span>W (270°)</span>
+                                    </div>
+                                </div>
+
+                                <!-- Building Type Selector -->
+                                <div class="form-group">
+                                    <label class="form-label" for="building-type">Building Type</label>
+                                    <select id="building-type" class="form-control">
+                                        <option value="0">Baseline Building</option>
+                                        <option value="1">Improved Building</option>
+                                        <option value="2">High-Performance Building</option>
+                                        <option value="3">Low-Energy Building</option>
+                                        <option value="4">Net Zero Building</option>
+                                        <option value="5">Smart Net Zero Building</option>
+                                    </select>
+                                    <div class="building-description" id="building-description">
+                                        Standard construction with basic efficiency
+                                    </div>
+                                </div>
+
+                                <!-- Building Size -->
+                                <div class="form-group">
+                                    <label class="form-label" for="building-size">Building Size (m²)</label>
+                                    <input type="number" id="building-size" class="form-control" 
+                                           value="1000" min="100" max="10000" step="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Panel - 3D Visualization -->
+                    <div class="viz-panel">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>3D Building Visualization</h3>
+                            </div>
+                            <div class="card__body">
+                                <div id="three-container" class="three-container"></div>
+                                <div class="solar-indicators">
+                                    <div class="solar-indicator north">
+                                        <div class="indicator-label">North</div>
+                                        <div class="indicator-value" id="solar-north">110 kWh/m²</div>
+                                    </div>
+                                    <div class="solar-indicator east">
+                                        <div class="indicator-label">East</div>
+                                        <div class="indicator-value" id="solar-east">320 kWh/m²</div>
+                                    </div>
+                                    <div class="solar-indicator south">
+                                        <div class="indicator-label">South</div>
+                                        <div class="indicator-value" id="solar-south">450 kWh/m²</div>
+                                    </div>
+                                    <div class="solar-indicator west">
+                                        <div class="indicator-label">West</div>
+                                        <div class="indicator-value" id="solar-west">380 kWh/m²</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel - Performance Metrics -->
+                    <div class="metrics-panel">
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Real-time Performance Metrics</h3>
+                            </div>
+                            <div class="card__body">
+                                <!-- Energy Performance -->
+                                <div class="metric-section">
+                                    <h4>Energy Performance</h4>
+                                    <div class="metric-grid">
+                                        <div class="metric-item">
+                                            <div class="metric-label">Annual Energy Consumption</div>
+                                            <div class="metric-value" id="energy-consumption">180 kWh/m²/year</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Solar Gain (Current Orientation)</div>
+                                            <div class="metric-value" id="solar-gain">110 kWh/m²/year</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Net Energy Balance</div>
+                                            <div class="metric-value" id="net-energy">-70 kWh/m²/year</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Carbon Emissions</div>
+                                            <div class="metric-value" id="carbon-emissions">90 kg CO₂/m²/year</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Financial Analysis -->
+                                <div class="metric-section">
+                                    <h4>Financial Analysis</h4>
+                                    <div class="metric-grid">
+                                        <div class="metric-item">
+                                            <div class="metric-label">Construction Cost</div>
+                                            <div class="metric-value" id="construction-cost">₹11,760/m²</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Annual Operating Cost</div>
+                                            <div class="metric-value" id="operating-cost">₹900/m²/year</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Smart Technology Savings</div>
+                                            <div class="metric-value" id="tech-savings">₹0/year</div>
+                                        </div>
+                                        <div class="metric-item">
+                                            <div class="metric-label">Payback Period</div>
+                                            <div class="metric-value" id="payback-period">N/A</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Charts -->
+                                <div class="chart-section">
+                                    <div class="chart-container">
+                                        <canvas id="energy-chart" width="300" height="200"></canvas>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="solar-chart" width="300" height="200"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Section - Smart Technologies and Renewable Energy -->
+                <div class="technologies-section">
+                    <div class="tech-grid">
+                        <!-- Smart Technologies -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Smart Technologies</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="tech-toggles" id="smart-tech-toggles">
+                                    <!-- Technologies will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Renewable Energy Systems -->
+                        <div class="card">
+                            <div class="card__header">
+                                <h3>Renewable Energy Systems</h3>
+                            </div>
+                            <div class="card__body">
+                                <div class="tech-toggles" id="renewable-toggles">
+                                    <!-- Renewable systems will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
